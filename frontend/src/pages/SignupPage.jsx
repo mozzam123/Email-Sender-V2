@@ -1,8 +1,9 @@
+import React from "react";
 import Signup from "../components/Auth/Signup";
 
 const SignupPage = () => {
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-purple">
+    <div className="flex justify-center items-center min-h-screen w-full bg-gray-50">
       <Signup />
     </div>
   );

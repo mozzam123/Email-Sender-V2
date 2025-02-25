@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { FaGoogle } from "react-icons/fa";
-import { Button, Form, Card } from "react-bootstrap";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./style.css"; // Using the same style.css from the Login component
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -51,63 +50,75 @@ const Signup = () => {
   };
 
   return (
-    <Card style={{ width: "22rem", padding: "20px", borderRadius: "10px", margin: "2rem auto" }}>
-      <h3 className="text-center">Sign Up</h3>
-      {error && <div className="alert alert-danger">{error}</div>}
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
-
-        <Button 
-          variant="primary" 
-          type="submit" 
-          className="w-100"
-          disabled={isLoading}
-        >
-          {isLoading ? "Signing Up..." : "Sign Up"}
-        </Button>
-
-        <div className="text-center mt-3">
-          <Button variant="danger" className="w-100">
-            <FaGoogle /> Sign Up with Google
-          </Button>
+    <div id="webcrumbs" className="flex justify-center items-center w-full h-full">
+      <div className="w-[400px] bg-white rounded-lg shadow-lg p-8">
+        <div className="flex flex-col items-center mb-8">
+          <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4">
+            <span className="material-symbols-outlined text-3xl text-white">person_add</span>
+          </div>
+          <h1 className="text-2xl font-bold text-blue-500">Create Account</h1>
+          <p className="text-blue-400">Please register to continue</p>
         </div>
-        <div className="text-center mt-3">
-          Already have an account?{' '}
-          <a href="/login" style={{ cursor: 'pointer' }}>Login</a>
+
+        {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
+
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <div>
+            <label className="block text-sm font-medium text-blue-600 mb-2">Username</label>
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              placeholder="Enter your username"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-blue-600 mb-2">Email Address</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-blue-600 mb-2">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transform hover:scale-[1.02] transition-all duration-200 font-medium"
+            disabled={isLoading}
+          >
+            {isLoading ? "Creating Account..." : "Sign Up"}
+          </button>
+        </form>
+
+        <div className="mt-6 text-center">
+          <p className="text-blue-600">
+            Already have an account?
+            <a href="/login" className="ml-1 text-blue-500 hover:text-blue-700 font-medium transition duration-200">Login</a>
+          </p>
         </div>
-      </Form>
-    </Card>
+      </div>
+    </div>
   );
 };
 

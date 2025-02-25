@@ -1,103 +1,123 @@
-import { useState } from "react";
-import { FaGoogle } from "react-icons/fa";
-import { Button, Form, Card } from "react-bootstrap";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./style.css";
 
 const Login = () => {
-    const [formData, setFormData] = useState({
-        email: "",
-        password: "",
-    });
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    rememberMe: false
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+  const handleChange = (e) => {
+    const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    setFormData({ ...formData, [e.target.name]: value });
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-        setError("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+    try {
+      console.log('*******meta', import.meta.env.VITE_BACKEND_BASE_URL);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}user/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Login failed");
+      }
+      console.log("Login successful:", data);
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-        try {
+  return (
+    <div
+      id="webcrumbs"
+      className="flex justify-center items-center min-h-screen w-full bg-gray-100" // Updated line
+    >
+      <div className="w-[400px] bg-white rounded-lg shadow-lg p-8">
+        <div className="flex flex-col items-center mb-8">
+          <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4">
+            <span className="material-symbols-outlined text-3xl text-white">person</span>
+          </div>
+          <h1 className="text-2xl font-bold text-blue-500">Welcome Back</h1>
+          <p className="text-blue-400">Please login to your account</p>
+        </div>
 
-            
-            console.log('*******meta', import.meta.env.VITE_BACKEND_BASE_URL);
-            
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}user/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
+        {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
 
-            const data = await response.json();
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <div>
+            <label className="block text-sm font-medium text-blue-600 mb-2">Email Address</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
 
-            if (!response.ok) {
-                throw new Error(data.error || "Login failed");
-            }
+          <div>
+            <label className="block text-sm font-medium text-blue-600 mb-2">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
 
-            // Handle successful login
-            console.log("Login successful:", data);
-            navigate("/"); // Redirect to home after login
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+          <div className="flex items-center justify-between">
+            <label className="flex items-center">
+              <input 
+                type="checkbox" 
+                name="rememberMe"
+                checked={formData.rememberMe}
+                onChange={handleChange}
+                className="w-4 h-4 rounded border-blue-300 text-blue-500 focus:ring-blue-500" 
+              />
+              <span className="ml-2 text-sm text-blue-600">Remember me</span>
+            </label>
+            <a href="#" className="text-sm text-blue-500 hover:text-blue-700 transition duration-200">Forgot Password?</a>
+          </div>
 
-    return (
-        <Card style={{ width: "22rem", padding: "20px", borderRadius: "10px", margin: "2rem auto" }}>
-            <h3 className="text-center">Login</h3>
-            {error && <div className="alert alert-danger">{error}</div>}
-            <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transform hover:scale-[1.02] transition-all duration-200 font-medium"
+            disabled={isLoading}
+          >
+            {isLoading ? "Signing In..." : "Sign In"}
+          </button>
+        </form>
 
-                <Form.Group className="mb-3">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
-
-                <Button
-                    variant="primary"
-                    type="submit"
-                    className="w-100"
-                    disabled={isLoading}
-                >
-                    {isLoading ? "Logging In..." : "Login"}
-                </Button>
-
-                <div className="text-center mt-3">
-                    <Button variant="danger" className="w-100">
-                        <FaGoogle /> Login with Google
-                    </Button>
-                </div>
-                <div className="text-center mt-3">
-                    Don't have an account?{' '}
-                    <a href="/signup" style={{ cursor: 'pointer' }}>Sign Up</a>
-                </div>
-            </Form>
-        </Card>
-    );
+        <div className="mt-6 text-center">
+          <p className="text-blue-600">
+            Don't have an account?
+            <a href="/signup" className="ml-1 text-blue-500 hover:text-blue-700 font-medium transition duration-200">Sign Up</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default Login; 
+export default Login;
