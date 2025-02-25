@@ -22,8 +22,11 @@ const Login = () => {
         setError("");
 
         try {
-            console.log(process.env.REACT_APP_API_URL);
-            const response = await fetch(`${import.meta.env.REACT_APP_BACKEND_BASE_URL}user/login`, {
+
+            
+            console.log('*******meta', import.meta.env.VITE_BACKEND_BASE_URL);
+            
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}user/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

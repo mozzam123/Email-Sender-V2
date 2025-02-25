@@ -24,7 +24,7 @@ const Signup = () => {
 
     try {
       console.log("Environment Variables:", process.env);
-      const response = await fetch(`${import.meta.env.REACT_APP_BACKEND_BASE_URL}user/register`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}user/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
