@@ -46,7 +46,7 @@ const Login = () => {
   return (
     <div
       id="webcrumbs"
-      className="flex justify-center items-center min-h-screen w-full bg-gray-100" // Updated line
+      className="flex justify-center items-center min-h-screen w-full bg-gray-100"
     >
       <div className="w-[400px] bg-white rounded-lg shadow-lg p-8">
         <div className="flex flex-col items-center mb-8">

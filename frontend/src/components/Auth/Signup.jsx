@@ -50,9 +50,9 @@ const Signup = () => {
   };
 
   return (
-    <div id="webcrumbs" className="flex justify-center items-center w-full h-full">
+    <div id="webcrumbs" className="flex">
       <div className="w-[400px] bg-white rounded-lg shadow-lg p-8">
-        <div className="flex flex-col items-center mb-8">
+        <div className="align-center">
           <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4">
             <span className="material-symbols-outlined text-3xl text-white">person_add</span>
           </div>
