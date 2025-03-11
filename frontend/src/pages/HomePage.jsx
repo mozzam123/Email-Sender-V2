@@ -61,17 +61,6 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-between pt-2">
-                        <label className="flex items-center">
-                            <input type="checkbox" className="w-4 h-4 rounded border-blue-300 text-blue-500 focus:ring-blue-500" />
-                            <span className="ml-2 text-sm text-blue-600">Save as draft</span>
-                        </label>
-                        <label className="flex items-center">
-                            <input type="checkbox" className="w-4 h-4 rounded border-blue-300 text-blue-500 focus:ring-blue-500" />
-                            <span className="ml-2 text-sm text-blue-600">High priority</span>
-                        </label>
-                    </div>
-
                     <button
                         type="submit"
                         className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transform hover:scale-[1.02] transition-all duration-200 font-medium flex items-center justify-center gap-2"
